@@ -18,7 +18,7 @@ const EmbeddedWebchat = (props: Props) => {
     }
     if (!window.document.getElementById(INJECTION_ID)) {
       const script = window.document.createElement("script")
-      script.src = `https://cdn.botpress.dev/webchat/v0/inject.js`
+      script.src = `https://cdn.botpress.cloud/webchat/v3.2/inject.js`
       script.id = INJECTION_ID
       window.document.body.appendChild(script)
     }
@@ -58,9 +58,9 @@ const EmbeddedWebchat = (props: Props) => {
     }
     const webchatConfig = {
       botId: props.botID,
-      clientId: props.botID,
-      hostUrl: "https://cdn.botpress.dev/webchat/v0",
-      messagingUrl: "https://messaging.botpress.dev",
+      clientId: "c4aae970-1304-4b0e-bfa6-55c13a110136",
+      hostUrl: "https://cdn.botpress.cloud/webchat/v3.2",
+      messagingUrl: "https://messaging.botpress.cloud",
       stylesheet: `${window.location.origin}/webchat-stylesheet.css`,
       showConversationsButton: false,
       hideWidget: true,
