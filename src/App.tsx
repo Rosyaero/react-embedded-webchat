@@ -1,7 +1,7 @@
 import "./App.css"
 import EmbeddedWebchat from "./EmbeddedWebchat"
 
-const BOT_ID = "3c099433-9f68-4ade-a850-6d2744de215d"
+const BOT_ID = "477af03c-98d9-416e-9536-1ad66a91e54e"
 function App() {
   return (
     <div className="App">
