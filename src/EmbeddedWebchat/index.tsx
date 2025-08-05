@@ -13,27 +13,28 @@ const EmbeddedWebchat = (props: Props) => {
   const [webchatReady, setWebchatReady] = useState(false)
 
   const loadWebchatScript = (): Promise<Webchat> => {
-    if (window.botpressWebChat) {
-      return Promise.resolve(window.botpressWebChat)
-    }
-    if (!window.document.getElementById(INJECTION_ID)) {
-      const script = window.document.createElement("script")
-      script.src = `https://cdn.botpress.cloud/webchat/v3.2/inject.js`
+    return new Promise((resolve) => {
+      if (window.botpressWebChat) {
+        setWebchatLoaded(true)
+        resolve(window.botpressWebChat)
+        return
+      }
+  
+      const existingScript = document.getElementById(INJECTION_ID)
+      if (existingScript) return
+  
+      const script = document.createElement("script")
+      script.src = "https://cdn.botpress.cloud/webchat/v3.2/inject.js"
       script.id = INJECTION_ID
-      window.document.body.appendChild(script)
-    }
-    const loadPromise = new Promise<Webchat>((resolve) => {
-      const intervalId = setInterval(() => {
-        if (window.botpressWebChat) {
-          setWebchatLoaded(true)
-          clearInterval(intervalId)
-          resolve(window.botpressWebChat)
-        }
-      }, 100)
+      script.onload = () => {
+        setWebchatLoaded(true) // ✅ critical: triggers second useEffect
+        resolve(window.botpressWebChat)
+      }
+      document.body.appendChild(script)
     })
-    return loadPromise
   }
-
+  
+  
   useEffect(() => {
     loadWebchatScript().then((webchat: Webchat) => {
       webchat.onEvent(
