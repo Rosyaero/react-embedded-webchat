@@ -25,8 +25,9 @@ const EmbeddedWebchat = ({ botID }: Props) => {
       });
 
       // ✅ Open the chat immediately
-      window.botpressWebChat.on("webchat:ready", () => {
-        window.botpressWebChat.open();
+      (window.botpressWebChat as any).init({...})
+      (window.botpressWebChat as any).on('webchat:ready', () => {
+        (window.botpressWebChat as any).open();
       });
     };
 
