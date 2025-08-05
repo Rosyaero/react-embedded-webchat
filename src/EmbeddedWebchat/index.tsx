@@ -6,13 +6,13 @@ interface Props {
 
 const EmbeddedWebchat = ({ botID }: Props) => {
   useEffect(() => {
-    // Inject the script
     const script = document.createElement("script");
     script.src = "https://cdn.botpress.cloud/webchat/v3.2/inject.js";
     script.async = true;
     script.onload = () => {
-      // ✅ Initialize after script loads
-      window.botpressWebChat.init({
+      const webchat = (window as any).botpressWebChat;
+
+      webchat.init({
         botId: botID,
         clientId: "c4aae970-1304-4b0e-bfa6-55c13a110136",
         hostUrl: "https://cdn.botpress.cloud/webchat/v3.2",
@@ -24,10 +24,8 @@ const EmbeddedWebchat = ({ botID }: Props) => {
         chatId: "botpress-webchat",
       });
 
-      // ✅ Open the chat immediately
-      (window.botpressWebChat as any).init({...})
-      (window.botpressWebChat as any).on('webchat:ready', () => {
-        (window.botpressWebChat as any).open();
+      webchat.on("webchat:ready", () => {
+        webchat.open();
       });
     };
 
